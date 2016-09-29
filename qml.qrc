@@ -3,6 +3,7 @@
         <file>login.qml</file>
         <file>qtquickcontrols2.conf</file>
         <file>main.qml</file>
+        <file>viewnote.qml</file>
     </qresource>
     <qresource prefix="/components">
         <file>BaseComponent.qml</file>
@@ -14,6 +15,7 @@
         <file>logo.png</file>
         <file>menu.svg</file>
         <file>plus.svg</file>
+        <file>check.svg</file>
     </qresource>
     <qresource prefix="/sql">
         <file>create_data.sql</file>

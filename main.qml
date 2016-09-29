@@ -101,6 +101,9 @@ ApplicationWindow {
                     sourceSize.width:  parent.height * 0.5
                     sourceSize.height: parent.height * 0.5
                 }
+                onClicked: {
+                    stackView.push("qrc:/viewnote.qml");
+                }
             }
         }
     }
