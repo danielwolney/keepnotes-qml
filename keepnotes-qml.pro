@@ -10,7 +10,8 @@ SOURCES += main.cpp \
     user.cpp \
     syncengine.cpp \
     jsonparser.cpp \
-    usermanager.cpp
+    usermanager.cpp \
+    notesmodel.cpp
 
 RESOURCES += qml.qrc
 
@@ -29,4 +30,5 @@ HEADERS += \
     user.h \
     syncengine.h \
     jsonparser.h \
-    usermanager.h
+    usermanager.h \
+    notesmodel.h

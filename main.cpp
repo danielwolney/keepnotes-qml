@@ -4,8 +4,8 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QGuiApplication app(argc, argv);
 
     AppController *controller = new AppController();
     controller->startApplication();

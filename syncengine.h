@@ -5,7 +5,7 @@
 #include <QNetworkRequest>
 #include <QJsonArray>
 
-#define API_ADRESS "http://192.168.0.1:8080/api/v1"
+#define API_ADRESS "http://192.168.0.17:8080/api/v1"
 
 class QNetworkAccessManager;
 
@@ -18,7 +18,7 @@ protected:
     void run();
 signals:
     void downloadNotesFinished();
-    void requestError(QString msg);
+    void downloadError(QString msg);
 
 public slots:
     void setUserToken(QString token);

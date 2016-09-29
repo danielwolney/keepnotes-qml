@@ -12,6 +12,8 @@
     <qresource prefix="/img">
         <file>back.svg</file>
         <file>logo.png</file>
+        <file>menu.svg</file>
+        <file>plus.svg</file>
     </qresource>
     <qresource prefix="/sql">
         <file>create_data.sql</file>

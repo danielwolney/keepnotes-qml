@@ -51,7 +51,7 @@ void SyncEngine::downloadNotes()
         return;
     }
     if (m_userToken.isEmpty()) {
-        emit downloadNotesFinished();
+        emit downloadError("Token inválido");
         return;
     }
 
@@ -60,6 +60,7 @@ void SyncEngine::downloadNotes()
 
     connect(reply, &QNetworkReply::finished, this, [=]() {
         int statusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+        QString content = reply->readAll();
         if (statusCode != 200) {
             QString errorMsg = "";
             if (statusCode == 401) {
@@ -67,9 +68,8 @@ void SyncEngine::downloadNotes()
             } else {
                 errorMsg = reply->errorString();
             }
-            emit requestError(errorMsg);
+            emit downloadError(errorMsg);
         } else {
-            QString content = reply->readAll();
             saveNotes(JSONParser::parseToArray(content));
         }
         reply->deleteLater();

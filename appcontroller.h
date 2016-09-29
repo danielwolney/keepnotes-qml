@@ -29,10 +29,8 @@ private:
     void showLoginWindow();
     void showMainWindow();
     void saveLoginInfo(QString email, QString jsonLogin);
-    Q_INVOKABLE void completeLogin();
-
-
     void downloadInitialData();
+    Q_INVOKABLE void completeLogin();
 };
 
 #endif // APPCONTROLLER_H

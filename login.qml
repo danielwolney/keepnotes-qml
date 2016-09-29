@@ -2,13 +2,14 @@ import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Controls.Material 2.0
 import QtQuick.Layouts 1.1
+import QtQuick.Window 2.2
 import "qrc:/components"
 
 ApplicationWindow {
     id: loginWindow
     visible: true
-    width: 420
-    height: 680
+    minimumHeight: 680
+    minimumWidth: 420
     title: qsTr("Keepnotes")
     property real pixelSize: height * 0.03
     Material.accent: "#FBC02D"
@@ -22,8 +23,7 @@ ApplicationWindow {
         }
         onLoginError: {
             loading.close();
-            print("Erro: " + errorMessage);
-            txtEmail.forceActiveFocus();
+            print(errorMessage);
         }
     }
 
@@ -80,15 +80,6 @@ ApplicationWindow {
                 echoMode: TextInput.Password
                 text: "admin123"
             }
-//            CheckBox {
-//                id: keeplogged
-//                indicator.implicitHeight: contentItem.implicitHeight
-//                indicator.implicitWidth: contentItem.implicitHeight
-//                Layout.fillHeight: true
-//                font.pixelSize: pixelSize
-//                text: "Lembrar"
-//            }
-
             MaterialButton {
                 Layout.fillHeight: true
                 anchors {
@@ -143,4 +134,5 @@ ApplicationWindow {
             running: false
         }
     }
+
 }
