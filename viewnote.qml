@@ -47,9 +47,16 @@ Page {
                 fillMode: Image.PreserveAspectFit
             }
             onClicked: {
+                app.notes.addNote(textArea.text);
                 stackView.pop();
             }
         }
+    }
+    TextArea {
+        id: textArea
+        anchors.fill: parent
+        background: Item {}
+        focus: true
     }
 
 

@@ -23,6 +23,7 @@ public:
     Q_INVOKABLE bool canFetchMore(const QModelIndex &parent) const Q_DECL_OVERRIDE;
     Q_INVOKABLE QHash<int,QByteArray> roleNames() const Q_DECL_OVERRIDE;
 public slots:
+    void addNote(QString text);
     void refreshTable();
 private:
     void registerRoleColum(int role, QString columnName);

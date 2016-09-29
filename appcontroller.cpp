@@ -8,6 +8,7 @@
 #include "jsonparser.h"
 #include "usermanager.h"
 #include "user.h"
+#include "notesmodel.h"
 
 AppController::AppController(QObject *parent) : QObject(parent)
   , m_engine(new QQmlApplicationEngine())
@@ -17,6 +18,11 @@ AppController::AppController(QObject *parent) : QObject(parent)
     m_engine->rootContext()->setContextProperty("app", this);
     m_syncEngine->start();
     m_syncEngine->moveToThread(m_syncEngine);
+}
+
+NotesModel *AppController::notes()
+{
+    return m_notesModel;
 }
 
 void AppController::startApplication()
@@ -36,6 +42,7 @@ void AppController::showLoginWindow()
 
 void AppController::showMainWindow()
 {
+    m_notesModel = new NotesModel(this);
     m_engine->load(QUrl(QStringLiteral("qrc:/main.qml")));
 }
 

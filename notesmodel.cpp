@@ -43,6 +43,19 @@ QHash<int, QByteArray> NotesModel::roleNames() const
     return names;
 }
 
+void NotesModel::addNote(QString text)
+{
+    if (!text.isEmpty()) {
+        beginInsertRows(QModelIndex(), rowCount(), rowCount());
+        int newRow = m_tableModel->rowCount();
+        m_tableModel->insertRow(newRow);
+        int columnText = columTableIndex("texto");
+        m_tableModel->setData(m_tableModel->index(newRow, columnText),text);
+        m_tableModel->submitAll();
+        endInsertRows();
+    }
+}
+
 void NotesModel::refreshTable()
 {
     if (QThread::currentThread() != thread()) {

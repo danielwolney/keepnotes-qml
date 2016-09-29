@@ -19,10 +19,6 @@ ApplicationWindow {
         initialItem: initialPage
         Page {
             id: initialPage
-            NotesModel {
-                id: notesModel
-            }
-
             header: ToolBar {
                 ToolButton {
                     id: btnMenu
@@ -55,16 +51,18 @@ ApplicationWindow {
                     bottom: parent.bottom; bottomMargin: parent.height * 0.02
                     horizontalCenter: parent.horizontalCenter
                 }
+                verticalLayoutDirection: ListView.BottomToTop
+
                 property real maximumWidth: 630
                 property real minimumCardHeight: lblTitle.implicitHeight * 4
                 property real relativeParentWidth: parent.width * 0.96
                 width: (relativeParentWidth < maximumWidth ? relativeParentWidth: maximumWidth);
-                model: notesModel
+                model: app.notes
                 spacing: parent.height * 0.01
                 delegate: Card {
                     color: "white"
                     width: ListView.view.width
-                    height: (listNotes.minimumCardHeight < label.implicitHeight ?
+                    height: (listNotes.minimumCardHeight <= label.implicitHeight ?
                                  label.implicitHeight + lblTitle.implicitHeight:
                                  listNotes.minimumCardHeight )
                     Label {
