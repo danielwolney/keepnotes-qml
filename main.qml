@@ -58,7 +58,6 @@ ApplicationWindow {
                 property real maximumWidth: 630
                 property real minimumCardHeight: lblTitle.implicitHeight * 4
                 property real relativeParentWidth: parent.width * 0.96
-                clip: true
                 width: (relativeParentWidth < maximumWidth ? relativeParentWidth: maximumWidth);
                 model: notesModel
                 spacing: parent.height * 0.01
