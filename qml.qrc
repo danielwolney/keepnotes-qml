@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="/">
+        <file>login.qml</file>
+        <file>qtquickcontrols2.conf</file>
+        <file>main.qml</file>
+    </qresource>
+    <qresource prefix="/components">
+        <file>BaseComponent.qml</file>
+        <file>Card.qml</file>
+        <file>MaterialButton.qml</file>
+    </qresource>
+    <qresource prefix="/img">
+        <file>back.svg</file>
+        <file>logo.png</file>
+    </qresource>
+    <qresource prefix="/sql">
+        <file>create_data.sql</file>
+    </qresource>
+</RCC>
