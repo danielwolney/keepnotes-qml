@@ -8,6 +8,9 @@ import Models 1.0
 
 Page {
     id: root
+    property bool editMode: false
+    property int itemIndex: -1
+
     header: ToolBar {
         ToolButton {
             id: btnBack
@@ -31,7 +34,7 @@ Page {
             anchors.verticalCenter: parent.verticalCenter
             font.bold: true
             color: "white"
-            text: "Nova nota"
+            text: (editMode ? "Editar nota" : "Nova nota")
         }
         ToolButton {
             id: btnOk
@@ -47,16 +50,42 @@ Page {
                 fillMode: Image.PreserveAspectFit
             }
             onClicked: {
-                app.notes.addNote(textArea.text);
+                if (editMode) {
+                    app.notes.updateNote(itemIndex, textArea.text);
+                } else {
+                    app.notes.addNote(textArea.text);
+                }
+
                 stackView.pop();
             }
         }
     }
-    TextArea {
-        id: textArea
+
+    Flickable {
+        id: flickable
         anchors.fill: parent
-        background: Item {}
-        focus: true
+        contentHeight: textArea.height
+        TextArea.flickable: TextArea {
+            id: textArea
+            wrapMode: TextArea.Wrap
+            background: Item {}
+            focus: true
+            text: (editMode ? app.notes.text(itemIndex) : "")
+        }
+        ScrollBar.vertical: ScrollBar { }
+    }
+//    TextArea {
+//        id: textArea
+//        anchors.fill: parent
+//        wrapMode: TextArea.Wrap
+//        background: Item {}
+//        focus: true
+//        text: (editMode ? app.notes.text(itemIndex) : "")
+//    }
+
+    Label {
+        visible: editMode
+        text: Qt.formatDateTime(app.notes.dateTime(itemIndex), "Ultima alteração dd/MM hh:mm");
     }
 
 

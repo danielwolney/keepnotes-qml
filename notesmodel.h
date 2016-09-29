@@ -24,6 +24,9 @@ public:
     Q_INVOKABLE QHash<int,QByteArray> roleNames() const Q_DECL_OVERRIDE;
 public slots:
     void addNote(QString text);
+    void updateNote(int row, QString text);
+    QString text(int row);
+    qlonglong dateTime(int row);
     void refreshTable();
 private:
     void registerRoleColum(int role, QString columnName);

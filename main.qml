@@ -51,15 +51,13 @@ ApplicationWindow {
                     bottom: parent.bottom; bottomMargin: parent.height * 0.02
                     horizontalCenter: parent.horizontalCenter
                 }
-                verticalLayoutDirection: ListView.BottomToTop
-
                 property real maximumWidth: 630
                 property real minimumCardHeight: lblTitle.implicitHeight * 4
                 property real relativeParentWidth: parent.width * 0.96
                 width: (relativeParentWidth < maximumWidth ? relativeParentWidth: maximumWidth);
                 model: app.notes
                 spacing: parent.height * 0.01
-                delegate: Card {
+                delegate: MaterialButton {
                     color: "white"
                     width: ListView.view.width
                     height: (listNotes.minimumCardHeight <= label.implicitHeight ?
@@ -75,6 +73,9 @@ ApplicationWindow {
                         text: model.text
                         width: parent.width * .9
                         height: parent.height * .9
+                    }
+                    onClicked: {
+                        stackView.push("qrc:/viewnote.qml", {"editMode": true, "itemIndex": index});
                     }
                 }
             }

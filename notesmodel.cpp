@@ -56,6 +56,15 @@ void NotesModel::addNote(QString text)
     }
 }
 
+void NotesModel::updateNote(int row, QString text)
+{
+
+    QModelIndex textIndex = m_tableModel->index(row, columTableIndex("texto"));
+    m_tableModel->setData(textIndex, text);
+    m_tableModel->submitAll();
+    emit dataChanged(index(row), index(row));
+}
+
 void NotesModel::refreshTable()
 {
     if (QThread::currentThread() != thread()) {
@@ -72,6 +81,16 @@ void NotesModel::refreshTable()
     m_tableModel->setTable(m_tableName);
     m_tableModel->select();
     endResetModel();
+}
+
+QString NotesModel::text(int row)
+{
+    return data(row, Text).toString();
+}
+
+qlonglong NotesModel::dateTime(int row)
+{
+    return data(row, Datetime).toLongLong();
 }
 
 int NotesModel::rowCount(const QModelIndex &parent) const
