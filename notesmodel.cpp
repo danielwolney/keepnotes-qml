@@ -79,6 +79,7 @@ bool NotesModel::removeRows(int row, int count, const QModelIndex &parent)
     if (success) {
         m_tableModel->submitAll();
         beginRemoveRows(parent,row,row+count-1);
+        m_tableModel->setSort(columTableIndex("data_hora"),Qt::DescendingOrder);
         m_tableModel->select();
         endRemoveRows();
     } else {
@@ -101,6 +102,7 @@ void NotesModel::refreshTable()
     }
     m_tableModel = new QSqlTableModel(this, DatabaseManager::instance()->database());
     m_tableModel->setTable(m_tableName);
+    m_tableModel->setSort(columTableIndex("data_hora"),Qt::DescendingOrder);
     m_tableModel->select();
     endResetModel();
 }

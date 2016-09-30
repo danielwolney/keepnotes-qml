@@ -11,7 +11,8 @@ ApplicationWindow {
     minimumHeight: 680
     minimumWidth: 420
     title: qsTr("Keepnotes")
-    property real pixelSize: height * 0.03
+    property real pixelSize: Math.min(20, Math.max(height, width) * 0.03)
+
     Material.accent: "#FBC02D"
     Material.background: "#FFF176"
 
@@ -22,8 +23,9 @@ ApplicationWindow {
             loginWindow.close();
         }
         onLoginError: {
+            errorPopup.errorMsg = errorMessage;
             loading.close();
-            print(errorMessage);
+            errorPopup.open();
         }
     }
 
@@ -63,7 +65,7 @@ ApplicationWindow {
                 }
                 placeholderText: "Email"
                 font.pixelSize: pixelSize
-                inputMethodHints: Qt.ImhPreferLowercase
+                inputMethodHints: Qt.ImhEmailCharactersOnly
                 text: "danielwolney@gmail.com"
                 focus: true;
             }
@@ -76,7 +78,7 @@ ApplicationWindow {
                     right: parent.right; rightMargin: parent.width * 0.03
                 }
                 placeholderText: "Senha"
-                font.pixelSize: pixelSize
+                font.pixelSize: pixelSize * .9
                 echoMode: TextInput.Password
                 text: "admin123"
             }
@@ -93,22 +95,6 @@ ApplicationWindow {
                     app.login(txtEmail.text, txtPass.text);
                 }
             }
-//            Label {
-//                font.pixelSize: pixelSize
-//                Layout.fillHeight: true
-//                text: "OU"
-//                anchors.horizontalCenter: parent.horizontalCenter
-//            }
-
-//            MaterialButton {
-//                font.pixelSize: pixelSize
-//                Layout.fillHeight: true
-//                anchors {
-//                    left: parent.left;
-//                    right: parent.right;
-//                }
-//                text: "Criar uma conta"
-//            }
         }
     }
 
@@ -134,5 +120,55 @@ ApplicationWindow {
             running: false
         }
     }
+
+    Popup {
+        id: errorPopup
+        property real maximumWidth: 420
+        property real maximumHeight: 190
+        property real relativeParentWidth: Math.min(parent.width, parent.height) * 0.65
+        property real relativeParentHeight: Math.max(parent.width, parent.height) * 0.25
+        x: parent.width / 2 - contentWidth / 2
+        y: parent.height / 2 - contentHeight / 2
+        contentHeight: Math.min(relativeParentHeight, maximumHeight);
+        contentWidth: Math.min(relativeParentWidth, maximumWidth);
+        modal: true
+        focus: true
+        property string errorMsg
+        contentItem: ColumnLayout {
+            id: elementsColumn
+            spacing: 20
+
+            Label {
+                text: "Erro"
+                font.bold: true
+                font.pixelSize: pixelSize
+            }
+
+            Label {
+                text: errorPopup.errorMsg
+                font.pixelSize: pixelSize
+            }
+
+            MaterialButton {
+                id: okButton
+                anchors {
+                    right: parent.right
+                    bottom: parent.bottom
+                }
+                implicitWidth: contentItem.implicitWidth * 3
+                text: "Ok"
+                font.pixelSize: pixelSize
+
+                onClicked: {
+                    errorPopup.close()
+                }
+                textColor: Material.primary
+                color: "white"
+                elevation: 0
+            }
+
+        }
+    }
+
 
 }

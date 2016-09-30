@@ -9,6 +9,7 @@ Button {
     property alias wrapMode: label.wrapMode
     property alias textColor: label.color
     property alias elevation: back.elevation
+
     background: BaseComponent {
         id: back
         elevation: 1
@@ -24,4 +25,5 @@ Button {
         color: 'white'
         text: parent.text.toUpperCase()
     }
+
 }

@@ -45,6 +45,7 @@ ApplicationWindow {
                 }
             }
             Label {
+                id: emptyMsg
                 anchors.centerIn: parent;
                 visible: listNotes.count < 1
                 text: "Sua notas aparecerão aqui"
@@ -128,7 +129,7 @@ ApplicationWindow {
                     right: parent.right; rightMargin: parent.height * 0.03
                     bottom: parent.bottom;  bottomMargin: parent.height * 0.03
                 }
-                implicitHeight: lblTitle.implicitHeight * 4
+                implicitHeight: emptyMsg.implicitHeight * 4
                 width: height
                 radius: height/2
                 color: "#FF5722"
