@@ -66,8 +66,13 @@ Page {
 
     Flickable {
         id: flickable
-        anchors.fill: parent
         contentHeight: textArea.height
+        anchors {
+            top: parent.top; topMargin: 10
+            right: parent.right; rightMargin: 10
+            left: parent.left; leftMargin: 10
+            bottom: parent.bottom; bottomMargin: 10
+        }
         TextArea.flickable: TextArea {
             id: textArea
             wrapMode: TextArea.Wrap
@@ -77,14 +82,6 @@ Page {
         }
         ScrollBar.vertical: ScrollBar { }
     }
-//    TextArea {
-//        id: textArea
-//        anchors.fill: parent
-//        wrapMode: TextArea.Wrap
-//        background: Item {}
-//        focus: true
-//        text: (editMode ? app.notes.text(itemIndex) : "")
-//    }
 
     Label {
         visible: editMode

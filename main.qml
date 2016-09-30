@@ -44,6 +44,12 @@ ApplicationWindow {
                     text: "Keepnotes"
                 }
             }
+            Label {
+                anchors.centerIn: parent;
+                visible: listNotes.count < 1
+                text: "Sua notas aparecerão aqui"
+            }
+
             ListView {
                 id: listNotes
                 anchors {
@@ -94,7 +100,7 @@ ApplicationWindow {
                             if (Math.abs(deltaX) < (parent.width * 0.5)) {
                                 parent.x = 0;
                             } else {
-                                parent.x = (deltaX > 0 ? drag.maximumX: drag.minimumX);//Qt.binding(function(){return (deltaX > 0 ? drag.maximumX: drag.minimumX)});
+                                parent.x = (deltaX > 0 ? drag.maximumX: drag.minimumX);
                             }
                         }
                     }
