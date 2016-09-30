@@ -57,7 +57,8 @@ ApplicationWindow {
                 width: (relativeParentWidth < maximumWidth ? relativeParentWidth: maximumWidth);
                 model: app.notes
                 spacing: parent.height * 0.01
-                delegate: MaterialButton {
+                delegate: Card {
+                    property int startX
                     color: "white"
                     width: ListView.view.width
                     height: (listNotes.minimumCardHeight <= label.implicitHeight ?
@@ -74,10 +75,44 @@ ApplicationWindow {
                         width: parent.width * .9
                         height: parent.height * .9
                     }
-                    onClicked: {
-                        stackView.push("qrc:/viewnote.qml", {"editMode": true, "itemIndex": index});
+                    MouseArea {
+                        id: mouseArea
+                        anchors.fill: parent
+                        drag.target: parent
+                        drag.axis: Drag.XAxis
+                        drag.minimumX: 0 - parent.width
+                        drag.maximumX: parent.width
+                        onClicked: {
+                            stackView.push("qrc:/viewnote.qml", {"editMode": true, "itemIndex": index});
+                        }
+                        onPressed: {
+                            mouse.accepted = true;
+                            startX = parent.x;
+                        }
+                        onReleased: {
+                            var deltaX = parent.x - startX;
+                            if (Math.abs(deltaX) < (parent.width * 0.5)) {
+                                parent.x = 0;
+                            } else {
+                                parent.x = (deltaX > 0 ? drag.maximumX: drag.minimumX);//Qt.binding(function(){return (deltaX > 0 ? drag.maximumX: drag.minimumX)});
+                            }
+                        }
                     }
+                    onXChanged: {
+                        if (x == mouseArea.drag.maximumX || x == mouseArea.drag.minimumX) {
+                            app.notes.removeNote(index);
+                        }
+                    }
+                    Behavior on x { NumberAnimation { duration: 200 } }
                 }
+                add: Transition {
+                    NumberAnimation { properties: "x, y"; duration: 500; easing.type: Easing.InOutExpo }
+                    NumberAnimation { properties: "opacity"; from: 0; to: 1; duration: 500}
+                }
+                displaced: Transition {
+                    NumberAnimation { properties: "x, y"; duration: 500; easing.type: Easing.InOutExpo }
+                }
+                ScrollBar.vertical: ScrollBar{}
             }
 
             MaterialButton {

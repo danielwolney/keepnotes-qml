@@ -8,13 +8,16 @@ NotesModel::NotesModel(QObject *parent) :
     m_tableModel(new QSqlTableModel(this, DatabaseManager::instance()->database()))
 {
     connect(DatabaseManager::instance(), &DatabaseManager::connectionRefreshed, this, &NotesModel::refreshTable);
-    m_tableName = "nota";
-    m_tableModel->setTable(m_tableName);
-    m_tableModel->select();
+
     registerRoleColum(ID, "id");
     registerRoleColum(ResourceID, "resource_id");
     registerRoleColum(Text, "texto");
     registerRoleColum(Datetime, "data_hora");
+
+    m_tableName = "nota";
+    m_tableModel->setTable(m_tableName);
+    m_tableModel->setSort(columTableIndex("data_hora"),Qt::DescendingOrder);
+    m_tableModel->select();
 }
 
 void NotesModel::fetchMore(const QModelIndex &parent)
@@ -46,8 +49,8 @@ QHash<int, QByteArray> NotesModel::roleNames() const
 void NotesModel::addNote(QString text)
 {
     if (!text.isEmpty()) {
-        beginInsertRows(QModelIndex(), rowCount(), rowCount());
-        int newRow = m_tableModel->rowCount();
+        beginInsertRows(QModelIndex(), 0/*rowCount()*/,0 /*rowCount()*/);
+        int newRow = 0;//m_tableModel->rowCount();
         m_tableModel->insertRow(newRow);
         int columnText = columTableIndex("texto");
         m_tableModel->setData(m_tableModel->index(newRow, columnText),text);
@@ -60,9 +63,28 @@ void NotesModel::updateNote(int row, QString text)
 {
 
     QModelIndex textIndex = m_tableModel->index(row, columTableIndex("texto"));
-    m_tableModel->setData(textIndex, text);
-    m_tableModel->submitAll();
-    emit dataChanged(index(row), index(row));
+    if (m_tableModel->setData(textIndex, text) && m_tableModel->submitAll()) {
+        emit dataChanged(index(row), index(row));
+    }
+}
+
+bool NotesModel::removeNote(int row)
+{
+    return removeRow(row);
+}
+
+bool NotesModel::removeRows(int row, int count, const QModelIndex &parent)
+{
+    bool success = m_tableModel->removeRows(row, count, parent);
+    if (success) {
+        m_tableModel->submitAll();
+        beginRemoveRows(parent,row,row+count-1);
+        m_tableModel->select();
+        endRemoveRows();
+    } else {
+        m_tableModel->revert();
+    }
+    return success;
 }
 
 void NotesModel::refreshTable()

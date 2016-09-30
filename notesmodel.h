@@ -22,9 +22,12 @@ public:
     Q_INVOKABLE void fetchMore(const QModelIndex &parent) Q_DECL_OVERRIDE;
     Q_INVOKABLE bool canFetchMore(const QModelIndex &parent) const Q_DECL_OVERRIDE;
     Q_INVOKABLE QHash<int,QByteArray> roleNames() const Q_DECL_OVERRIDE;
+    virtual bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex());
+
 public slots:
     void addNote(QString text);
     void updateNote(int row, QString text);
+    bool removeNote(int row);
     QString text(int row);
     qlonglong dateTime(int row);
     void refreshTable();

@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS info_sync_nota (
     local_id INTEGER,
     resource_id TEXT,
     tipo_sync TEXT,
-    CONSTRAINT sync_pkey PRIMARY KEY (local_id,resource_id)
+    CONSTRAINT sync_pkey PRIMARY KEY (local_id,resource_id, tipo_sync)
 )
 #EOQ#
 CREATE TRIGGER IF NOT EXISTS sync_update AFTER UPDATE OF texto ON nota

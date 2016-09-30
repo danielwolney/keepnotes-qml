@@ -10,6 +10,9 @@ Page {
     id: root
     property bool editMode: false
     property int itemIndex: -1
+    Component.onCompleted: {
+        textArea.forceActiveFocus();
+    }
 
     header: ToolBar {
         ToolButton {
