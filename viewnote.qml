@@ -68,6 +68,8 @@ Page {
     Flickable {
         id: flickable
         contentHeight: textArea.height
+        contentWidth: textArea.width
+
         anchors {
             top: parent.top; topMargin: 10
             right: parent.right; rightMargin: 10
@@ -76,12 +78,13 @@ Page {
         }
         TextArea.flickable: TextArea {
             id: textArea
+            Material.accent: "#FBC02D"
             wrapMode: TextArea.Wrap
             background: Item {}
             focus: true
             text: (editMode ? app.notes.text(itemIndex) : "")
         }
-        ScrollBar.vertical: ScrollBar { }
+        ScrollBar.vertical: ScrollBar {}
     }
 
     Label {

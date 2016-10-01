@@ -78,7 +78,7 @@ ApplicationWindow {
                     right: parent.right; rightMargin: parent.width * 0.03
                 }
                 placeholderText: "Senha"
-                font.pixelSize: pixelSize * .9
+                font.pixelSize: pixelSize
                 echoMode: TextInput.Password
                 text: "admin123"
             }
@@ -130,43 +130,49 @@ ApplicationWindow {
         x: parent.width / 2 - contentWidth / 2
         y: parent.height / 2 - contentHeight / 2
         contentHeight: Math.min(relativeParentHeight, maximumHeight);
-        contentWidth: Math.min(relativeParentWidth, maximumWidth);
+        contentWidth: elementsColumn.width
         modal: true
         focus: true
         property string errorMsg
         contentItem: ColumnLayout {
             id: elementsColumn
-            spacing: 20
+            clip: true
+            width: Math.min(errorPopup.relativeParentWidth, errorPopup.maximumWidth);
+            spacing: 10
+            Column {
+                width: parent.width
+                spacing: 10
+                Label {
+                    text: "Erro"
+                    font.bold: true
+                    font.pixelSize: pixelSize
+                }
+                Label {
+                    id: labelMsg
 
-            Label {
-                text: "Erro"
-                font.bold: true
-                font.pixelSize: pixelSize
+                    width: parent.width
+                    text: errorPopup.errorMsg
+                    wrapMode: Label.WrapAtWordBoundaryOrAnywhere
+                    font.pixelSize: pixelSize
+                }
+                Layout.fillWidth: true
             }
-
-            Label {
-                text: errorPopup.errorMsg
-                font.pixelSize: pixelSize
-            }
-
-            MaterialButton {
+            Button {
                 id: okButton
                 anchors {
                     right: parent.right
                     bottom: parent.bottom
                 }
-                implicitWidth: contentItem.implicitWidth * 3
-                text: "Ok"
+                text: "OK"
+                flat: true
                 font.pixelSize: pixelSize
-
+                background.anchors.bottom: okButton.bottom
+                bottomPadding: 0
+                Material.foreground: "#FBC02D"
                 onClicked: {
                     errorPopup.close()
                 }
-                textColor: Material.primary
-                color: "white"
-                elevation: 0
             }
-
         }
     }
 
