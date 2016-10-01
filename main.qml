@@ -110,8 +110,10 @@ ApplicationWindow {
                             app.notes.removeNote(index);
                         }
                     }
+                    opacity: Math.min(((x+width/2)/(width/2)), ((width/2-x)/(x+width/2)));
                     Behavior on x { NumberAnimation { duration: 200 } }
                 }
+
                 add: Transition {
                     NumberAnimation { properties: "x, y"; duration: 500; easing.type: Easing.InOutExpo }
                     NumberAnimation { properties: "opacity"; from: 0; to: 1; duration: 500}
@@ -121,7 +123,6 @@ ApplicationWindow {
                 }
                 ScrollBar.vertical: ScrollBar{}
             }
-
             MaterialButton {
                 id: addButton
                 elevation: 4

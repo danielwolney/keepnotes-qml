@@ -102,11 +102,11 @@ Item  {
         anchors.horizontalCenterOffset: horizontalShadowOffset * (elevationInverted ? -1 : 1)
         anchors.verticalCenterOffset: verticalShadowOffset * (elevationInverted ? -1 : 1)
         glowRadius: elevationInfo.blur
-        opacity: elevationInfo.opacity
+        opacity: elevationInfo.opacity * parent.opacity
         spread: 0.05
         color: "black"
         cornerRadius: radius + glowRadius * 2.5
-        visible: parent.opacity == 1
+//        visible: parent.opacity == 1
     }
 
     RectangularGlow {
@@ -120,11 +120,11 @@ Item  {
         anchors.horizontalCenterOffset: horizontalShadowOffset * (elevationInverted ? -1 : 1)
         anchors.verticalCenterOffset: verticalShadowOffset * (elevationInverted ? -1 : 1)
         glowRadius: elevationInfo.blur
-        opacity: elevationInfo.opacity
+        opacity: elevationInfo.opacity * parent.opacity
         spread: 0.05
         color: "black"
         cornerRadius: radius + glowRadius * 2.5
-        visible: parent.opacity == 1
+//        visible: parent.opacity == 1
     }
     Rectangle {
         id: rect
