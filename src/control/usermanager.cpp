@@ -1,6 +1,6 @@
 #include "usermanager.h"
-#include "user.h"
-#include "databasemanager.h"
+#include "model/user.h"
+#include "database/databasemanager.h"
 #include <QSqlQuery>
 #include <QVariant>
 

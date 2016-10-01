@@ -4,16 +4,16 @@ QT += qml quick quickcontrols2 svg network sql
 
 CONFIG += c++11
 
-SOURCES += main.cpp \
-    appcontroller.cpp \
-    databasemanager.cpp \
-    user.cpp \
-    syncengine.cpp \
-    jsonparser.cpp \
-    usermanager.cpp \
-    notesmodel.cpp
+SOURCES += src/main.cpp \
+    src/control/appcontroller.cpp \
+    src/database/databasemanager.cpp \
+    src/model/user.cpp \
+    src/sync/syncengine.cpp \
+    src/utils/jsonparser.cpp \
+    src/control/usermanager.cpp \
+    src/model/notesmodel.cpp
 
-RESOURCES += qml.qrc
+RESOURCES += res/qml.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -25,10 +25,12 @@ DISTFILES += \
     qtquickcontrols2.conf
 
 HEADERS += \
-    appcontroller.h \
-    databasemanager.h \
-    user.h \
-    syncengine.h \
-    jsonparser.h \
-    usermanager.h \
-    notesmodel.h
+    src/control/appcontroller.h \
+    src/database/databasemanager.h \
+    src/model/user.h \
+    src/sync/syncengine.h \
+    src/utils/jsonparser.h \
+    src/control/usermanager.h \
+    src/model/notesmodel.h
+
+INCLUDEPATH += src/

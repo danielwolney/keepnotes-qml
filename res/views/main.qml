@@ -90,7 +90,7 @@ ApplicationWindow {
                         drag.minimumX: 0 - parent.width
                         drag.maximumX: parent.width
                         onClicked: {
-                            stackView.push("qrc:/viewnote.qml", {"editMode": true, "itemIndex": index});
+                            stackView.push("qrc:/views/viewnote.qml", {"editMode": true, "itemIndex": index});
                         }
                         onPressed: {
                             mouse.accepted = true;
@@ -143,7 +143,7 @@ ApplicationWindow {
                     sourceSize.height: parent.height * 0.5
                 }
                 onClicked: {
-                    stackView.push("qrc:/viewnote.qml");
+                    stackView.push("qrc:/views/viewnote.qml");
                 }
             }
         }

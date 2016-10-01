@@ -2,8 +2,8 @@
 #include <QThread>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
-#include "jsonparser.h"
-#include "databasemanager.h"
+#include "utils/jsonparser.h"
+#include "database/databasemanager.h"
 
 SyncEngine::SyncEngine(QObject *parent) : QThread(parent)
 {

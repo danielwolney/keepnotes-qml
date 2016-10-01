@@ -1,6 +1,6 @@
 #include "notesmodel.h"
 #include <QSqlTableModel>
-#include "databasemanager.h"
+#include "database/databasemanager.h"
 #include <QThread>
 
 NotesModel::NotesModel(QObject *parent) :

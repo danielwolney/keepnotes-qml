@@ -4,11 +4,11 @@
 #include <QNetworkReply>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
-#include "syncengine.h"
-#include "jsonparser.h"
+#include "sync/syncengine.h"
+#include "utils/jsonparser.h"
 #include "usermanager.h"
-#include "user.h"
-#include "notesmodel.h"
+#include "model/user.h"
+#include "model/notesmodel.h"
 
 AppController::AppController(QObject *parent) : QObject(parent)
   , m_engine(new QQmlApplicationEngine())
@@ -37,13 +37,13 @@ void AppController::startApplication()
 
 void AppController::showLoginWindow()
 {
-    m_engine->load(QUrl(QStringLiteral("qrc:/login.qml")));
+    m_engine->load(QUrl(QStringLiteral("qrc:/views/login.qml")));
 }
 
 void AppController::showMainWindow()
 {
     m_notesModel = new NotesModel(this);
-    m_engine->load(QUrl(QStringLiteral("qrc:/main.qml")));
+    m_engine->load(QUrl(QStringLiteral("qrc:/views/main.qml")));
 }
 
 void AppController::saveLoginInfo(QString email, QString jsonLogin)
