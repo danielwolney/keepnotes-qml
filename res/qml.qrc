@@ -7,11 +7,13 @@
         <file>views/login.qml</file>
         <file>views/main.qml</file>
         <file>views/viewnote.qml</file>
+        <file>views/listnotes.qml</file>
         <file>img/back.svg</file>
         <file>img/logo.png</file>
         <file>img/menu.svg</file>
         <file>img/plus.svg</file>
         <file>img/check.svg</file>
         <file>sql/create_data.sql</file>
+        <file>img/logout.svg</file>
     </qresource>
 </RCC>
