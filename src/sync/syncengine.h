@@ -5,7 +5,7 @@
 #include <QNetworkRequest>
 #include <QJsonArray>
 
-#define API_ADRESS "http://keepnotes-api.herokuapp.com/api/v1/"
+#define API_ADRESS "https://keepnotes-api.herokuapp.com/api/v1/"
 
 class QNetworkAccessManager;
 
