@@ -112,9 +112,9 @@ QString NotesModel::text(int row)
     return data(row, Text).toString();
 }
 
-qlonglong NotesModel::dateTime(int row)
+QDateTime NotesModel::dateTime(int row)
 {
-    return data(row, Datetime).toLongLong();
+    return QDateTime::fromTime_t(data(row, Datetime).toLongLong());
 }
 
 int NotesModel::rowCount(const QModelIndex &parent) const

@@ -40,7 +40,10 @@ void DatabaseManager::reconnectDB()
 
 void DatabaseManager::releaseConnection()
 {
+    QString dbPath = m_database.databaseName();
     m_database.close();
+    QFile::remove(dbPath);
+    QSqlDatabase::removeDatabase(CONNECTION_NAME);
 }
 
 DatabaseManager *DatabaseManager::instance()

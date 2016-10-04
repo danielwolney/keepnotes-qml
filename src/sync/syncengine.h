@@ -4,10 +4,13 @@
 #include <QThread>
 #include <QNetworkRequest>
 #include <QJsonArray>
+#include <QTimer>
 
 #define API_ADRESS "https://keepnotes-api.herokuapp.com/api/v1/"
 
 class QNetworkAccessManager;
+class UserManager;
+class User;
 
 class SyncEngine : public QThread
 {
@@ -21,13 +24,19 @@ signals:
     void downloadError(QString msg);
 
 public slots:
-    void setUserToken(QString token);
+    void setUserManager(UserManager *manager);
     void downloadNotes();
 private slots:
     void saveNotes(QJsonArray notesArray);
-private:
-    QString m_userToken;
 
+    void triggerSync();
+    void cancelSync();
+
+private:
+    UserManager *m_userManager;
+    User *m_user;
+
+    QTimer *m_timerSync;
     QNetworkAccessManager * m_networkAccessManager;
     QNetworkRequest prepareRequest(QString urlString);
 };

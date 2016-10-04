@@ -22,9 +22,6 @@ User *UserManager::user() const
 
 void UserManager::setUser(const QString &email, const QString &token)
 {
-    if (m_user) {
-        delete m_user;
-    }
     m_user = new User();
     m_user->setEmail(email);
     m_user->setToken(token);
@@ -34,9 +31,18 @@ void UserManager::setUser(const QString &email, const QString &token)
     query.bindValue(0, email);
     query.bindValue(1, token);
     query.exec();
+    emit login();
 }
 
-void UserManager::logoutUser()
+void UserManager::invalidateUser()
 {
-    //TODO
+    if (m_user) {
+        emit logout();
+        QSqlQuery query(DatabaseManager::instance()->database());
+        query.exec("DELETE FROM usuario");
+        m_user->deleteLater();
+        m_user = NULL;
+        DatabaseManager::instance()->releaseConnection();
+        DatabaseManager::instance()->reconnectDB();
+    }
 }

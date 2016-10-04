@@ -13,8 +13,13 @@ public:
 
     User *user() const;
     void setUser(const QString &email, const QString &token);
+signals:
+    void login();
+    void logout();
+
 public slots:
-    void logoutUser();
+    void invalidateUser();
+
 private:
     User *m_user;
 };

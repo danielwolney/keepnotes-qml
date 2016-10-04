@@ -15,7 +15,8 @@ AppController::AppController(QObject *parent) : QObject(parent)
   , m_userManager(new UserManager)
   , m_syncEngine(new SyncEngine())
 {
-    m_engine->rootContext()->setContextProperty("app", this);
+    m_engine->rootContext()->setContextProperty("app", this);    
+    m_syncEngine->setUserManager(m_userManager);
     m_syncEngine->start();
     m_syncEngine->moveToThread(m_syncEngine);
 }
@@ -28,7 +29,6 @@ NotesModel *AppController::notes()
 void AppController::startApplication()
 {
     if (m_userManager->user() != NULL) {
-        m_syncEngine->setUserToken(m_userManager->user()->token());
         showMainWindow();
     } else {
         showLoginWindow();
@@ -50,15 +50,8 @@ void AppController::saveLoginInfo(QString email, QString jsonLogin)
 {
     QJsonObject responseObject = JSONParser::parseToObject(jsonLogin);
     QString token = responseObject.value("token").toString();
-    m_userManager->setUser(email, token);
-    m_syncEngine->setUserToken(token);
-    downloadInitialData();
-}
-
-void AppController::downloadInitialData()
-{
     connect(m_syncEngine, &SyncEngine::downloadNotesFinished, this, &AppController::completeLogin);
-    m_syncEngine->downloadNotes();
+    m_userManager->setUser(email, token);
 }
 
 void AppController::completeLogin()
@@ -94,5 +87,12 @@ void AppController::login(QString email, QString password)
         reply->deleteLater();
         networkManager->deleteLater();
     }, Qt::QueuedConnection);
+}
+
+void AppController::logout()
+{
+    delete m_notesModel;
+    m_userManager->invalidateUser();
+    showLoginWindow();
 }
 

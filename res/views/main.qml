@@ -69,6 +69,8 @@ ApplicationWindow {
                 Material.foreground: "#FBC02D"
                 onClicked: {
                     popupaskLogout.close()
+                    app.logout();
+                    mainWindow.close();
                 }
             }
             Button {

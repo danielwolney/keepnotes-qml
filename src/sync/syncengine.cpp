@@ -4,20 +4,32 @@
 #include <QNetworkReply>
 #include "utils/jsonparser.h"
 #include "database/databasemanager.h"
+#include "control/usermanager.h"
+#include "model/user.h"
 
-SyncEngine::SyncEngine(QObject *parent) : QThread(parent)
+SyncEngine::SyncEngine(QObject *parent) : QThread(parent),
+    m_user(NULL)
 {
+    m_timerSync = new QTimer(this);
+    m_timerSync->setInterval(5*1000);
 }
 
 void SyncEngine::run()
 {
+    connect(m_timerSync, &QTimer::timeout, this, &SyncEngine::triggerSync);
     m_networkAccessManager = new QNetworkAccessManager();
+    if (m_userManager->user() != NULL) {
+        m_user = m_userManager->user();
+        m_timerSync->start();
+    }
     exec();
 }
 
-void SyncEngine::setUserToken(QString token)
+void SyncEngine::setUserManager(UserManager *manager)
 {
-    m_userToken = token;
+    m_userManager = manager;
+    connect(m_userManager, &UserManager::login, this, &SyncEngine::downloadNotes);
+    connect(m_userManager, &UserManager::logout, this, &SyncEngine::cancelSync);
 }
 
 void SyncEngine::saveNotes(QJsonArray notesList)
@@ -41,7 +53,19 @@ void SyncEngine::saveNotes(QJsonArray notesList)
     DatabaseManager::instance()->database().commit();
 
     emit downloadNotesFinished();
+    m_timerSync->start();
+}
 
+#include <QDebug>
+void SyncEngine::triggerSync()
+{
+    qDebug() << "SYNC";
+}
+
+void SyncEngine::cancelSync()
+{
+    m_timerSync->stop();
+    qDebug() << "CANCEL SYNC";
 }
 
 void SyncEngine::downloadNotes()
@@ -50,7 +74,9 @@ void SyncEngine::downloadNotes()
         QMetaObject::invokeMethod(this, "downloadNotes", Qt::QueuedConnection);
         return;
     }
-    if (m_userToken.isEmpty()) {
+    m_user = m_userManager->user();
+
+    if (m_user->token().isEmpty()) {
         emit downloadError("Token inválido");
         return;
     }
@@ -82,6 +108,6 @@ QNetworkRequest SyncEngine::prepareRequest(QString urlString)
     QNetworkRequest request;
     request.setUrl(url);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
-    request.setRawHeader("x-access-token",m_userToken.toLatin1());
+    request.setRawHeader("x-access-token",m_user->token().toLatin1());
     return request;
 }
