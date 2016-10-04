@@ -51,7 +51,6 @@ ApplicationWindow {
                 source: "qrc:/img/logo.png"
                 width: parent.width *.9
                 height: parent.height *.25
-
                 sourceSize.width: parent.width *.9
                 sourceSize.height: parent.height *.25
             }
