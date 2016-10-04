@@ -2,6 +2,7 @@
 #define NOTESMODEL_H
 
 #include <QAbstractListModel>
+#include <QDateTime>
 
 class QSqlTableModel;
 
@@ -29,7 +30,7 @@ public slots:
     void updateNote(int row, QString text);
     bool removeNote(int row);
     QString text(int row);
-    qlonglong dateTime(int row);
+    QDateTime dateTime(int row);
     void refreshTable();
 private:
     void registerRoleColum(int role, QString columnName);

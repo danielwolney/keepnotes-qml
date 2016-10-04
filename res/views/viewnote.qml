@@ -88,8 +88,12 @@ Page {
     }
 
     Label {
+        anchors {
+            right: parent.right; rightMargin: 10
+            bottom: parent.bottom; bottomMargin: 10
+        }
         visible: editMode
-        text: Qt.formatDateTime(app.notes.dateTime(itemIndex), "Ultima alteração dd/MM hh:mm");
+        text: "Ultima alteração: " + Qt.formatDateTime(app.notes.dateTime(itemIndex), "dd/MM hh:mm")
     }
 
 

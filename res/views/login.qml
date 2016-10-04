@@ -51,7 +51,6 @@ ApplicationWindow {
                 source: "qrc:/img/logo.png"
                 width: parent.width *.9
                 height: parent.height *.25
-
                 sourceSize.width: parent.width *.9
                 sourceSize.height: parent.height *.25
             }
@@ -129,7 +128,7 @@ ApplicationWindow {
         property real relativeParentHeight: Math.max(parent.width, parent.height) * 0.25
         x: parent.width / 2 - contentWidth / 2
         y: parent.height / 2 - contentHeight / 2
-        contentHeight: Math.min(relativeParentHeight, maximumHeight);
+        contentHeight: elementsColumn.height //Math.min(relativeParentHeight, maximumHeight)
         contentWidth: elementsColumn.width
         modal: true
         focus: true
@@ -138,8 +137,10 @@ ApplicationWindow {
             id: elementsColumn
             clip: true
             width: Math.min(errorPopup.relativeParentWidth, errorPopup.maximumWidth);
+            height: msgColumn.implicitHeight + spacing + okButton.implicitHeight
             spacing: 10
             Column {
+                id: msgColumn
                 width: parent.width
                 spacing: 10
                 Label {

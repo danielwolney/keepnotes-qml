@@ -22,6 +22,7 @@ Page {
                 fillMode: Image.PreserveAspectFit
             }
             onClicked: {
+                drawer.open()
             }
         }
         Label {

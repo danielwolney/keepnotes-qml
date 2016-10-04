@@ -25,6 +25,7 @@ signals:
 public slots:
     void startApplication();
     void login(QString email, QString password);
+    void logout();
 
 private:
     QQmlApplicationEngine* m_engine;
@@ -35,7 +36,6 @@ private:
     void showLoginWindow();
     void showMainWindow();
     void saveLoginInfo(QString email, QString jsonLogin);
-    void downloadInitialData();
     Q_INVOKABLE void completeLogin();
 };
 
