@@ -60,6 +60,39 @@ void SyncEngine::saveNotes(QJsonArray notesList)
 void SyncEngine::triggerSync()
 {
     qDebug() << "SYNC";
+    QSqlQuery query(DatabaseManager::instance()->database());
+    query.prepare("SELECT id, texto, data_hora FROM nota WHERE resource_id IS NULL OR resource_id = ''");
+    query.exec();
+    if (query.first()) {
+        QJsonArray noteArray;
+        do {
+            QJsonObject noteObj;
+            noteObj.insert("localID", QJsonValue(query.value("id").toInt()));
+            noteObj.insert("text", QJsonValue(query.value("texto").toString()));
+            noteObj.insert("date", QJsonValue(query.value("data_hora").toLongLong()));
+            noteArray.append(QJsonValue(noteObj));
+        } while(query.next());
+        QJsonDocument document;
+        document.setArray(noteArray);
+        QNetworkRequest request = prepareRequest(API_ADRESS"/notes");
+        request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+        QNetworkReply *reply = m_networkAccessManager->post(request,document.toJson());
+        connect(reply, &QNetworkReply::finished, this, [=]() {
+            qDebug() << reply->readAll();
+//            int statusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+//            if (statusCode == 200) {
+//                QJsonArray response = JSONParser::parseToArray(reply->readAll());
+//                for(int i = 0; i < response.size(); ++i) {
+//                    qDebug() << response.at(i);
+//                }
+//            }
+            reply->deleteLater();
+            m_timerSync->start();
+        }, Qt::QueuedConnection);
+        m_timerSync->stop();
+    } else {
+        qDebug() << "CU";
+    }
 }
 
 void SyncEngine::cancelSync()
