@@ -26,6 +26,16 @@ signals:
 public slots:
     void setUserManager(UserManager *manager);
     void downloadNotes();
+
+    void sendInserts();
+    void confirmInserts(QJsonArray savedNotes);
+
+    void sendDeletes();
+    void confirmDeletes(QJsonArray deletedNotes);
+
+    void sendUpdates();
+    void confirmUpdates(QJsonArray updatedNotes);
+
 private slots:
     void saveNotes(QJsonArray notesArray);
 

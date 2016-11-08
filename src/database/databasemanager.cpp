@@ -44,6 +44,8 @@ void DatabaseManager::releaseConnection()
     m_database.close();
     QFile::remove(dbPath);
     QSqlDatabase::removeDatabase(CONNECTION_NAME);
+    s_instance->deleteLater();
+    s_instance = NULL;
 }
 
 DatabaseManager *DatabaseManager::instance()
